@@ -5,8 +5,8 @@ const ChatRecorder = () => {
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);
-  const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
+  const [recognition, setRecognition] = useState(null);
   const chatWindowRef = useRef(null);
 
   const handleSendMessage = () => {
@@ -21,48 +21,41 @@ const ChatRecorder = () => {
     if (chatWindowRef.current) {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
-  }, [messages]);
+
+    // Configura o SpeechRecognition se o navegador for compatível
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognitionInstance = new SpeechRecognition();
+      recognitionInstance.lang = 'pt-BR'; // Definindo a língua para português
+      recognitionInstance.interimResults = true; // Permite que a transcrição seja exibida enquanto o usuário fala
+
+      recognitionInstance.onresult = (event) => {
+        const transcript = event.results[event.resultIndex][0].transcript;
+        setCurrentMessage(transcript); // Atualiza o campo de mensagem com a transcrição
+      };
+
+      recognitionInstance.onerror = (event) => {
+        console.error('Erro no reconhecimento de fala:', event.error);
+      };
+
+      setRecognition(recognitionInstance); // Armazena a instância de reconhecimento de fala
+    } else {
+      console.error('SpeechRecognition não é suportado no seu navegador.');
+    }
+  }, []);
 
   const startRecording = () => {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => {
-        const recorder = new MediaRecorder(stream);
-        recorder.ondataavailable = (event) => {
-          setAudioChunks(prevChunks => [...prevChunks, event.data]);
-        };
-        recorder.onstop = () => {
-          const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-          transcribeAudio(audioBlob);
-        };
-        recorder.start();
-        setMediaRecorder(recorder);
-        setIsRecording(true);
-      })
-      .catch(error => {
-        console.error('Erro ao acessar o microfone', error);
-      });
+    if (recognition) {
+      recognition.start();
+      setIsRecording(true);
+    }
   };
 
   const stopRecording = () => {
-    mediaRecorder.stop();
-    setIsRecording(false);
-  };
-
-  const transcribeAudio = (audioBlob) => {
-    const formData = new FormData();
-    formData.append('audio', audioBlob, 'audio.wav');
-
-    fetch('/api/transcribe-audio', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      setMessages([...messages, { text: data.transcription, sender: 'bot' }]);
-    })
-    .catch(error => {
-      console.error('Erro ao transcrever áudio:', error);
-    });
+    if (recognition) {
+      recognition.stop();
+      setIsRecording(false);
+    }
   };
 
   return (
