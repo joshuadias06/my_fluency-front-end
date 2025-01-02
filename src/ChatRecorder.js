@@ -7,11 +7,11 @@ const ChatRecorder = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [audioChunks, setAudioChunks] = useState([]);
-  const chatWindowRef = useRef(null);  // Referência para a janela de chat
+  const chatWindowRef = useRef(null);
 
   const handleSendMessage = () => {
     if (currentMessage.trim()) {
-      setMessages([...messages, currentMessage]);
+      setMessages([...messages, { text: currentMessage, sender: 'user' }]);
       setCurrentMessage('');
     }
   };
@@ -58,7 +58,7 @@ const ChatRecorder = () => {
     })
     .then(response => response.json())
     .then(data => {
-      setCurrentMessage(data.transcription);
+      setMessages([...messages, { text: data.transcription, sender: 'bot' }]);
     })
     .catch(error => {
       console.error('Erro ao transcrever áudio:', error);
@@ -69,7 +69,14 @@ const ChatRecorder = () => {
     <div className="chat-recorder">
       <div className="chat-window" ref={chatWindowRef}>
         {messages.map((msg, index) => (
-          <div key={index} className="chat-message">{msg}</div>
+          <div key={index} className={`chat-message-wrapper ${msg.sender === 'user' ? 'user-message' : 'bot-message'}`}>
+            <img 
+              className={`user-icon`} 
+              src={msg.sender === 'user' ? '/path-to-user-icon.jpg' : '/path-to-bot-icon.jpg'} 
+              alt="user icon" 
+            />
+            <div className="chat-message">{msg.text}</div>
+          </div>
         ))}
       </div>
       <div className="chat-input-wrapper">
@@ -88,21 +95,21 @@ const ChatRecorder = () => {
                 disabled={isRecording} 
                 className="record-button"
               >
-                <i className="fas fa-microphone"></i> {/* Ícone de Microfone */}
+                <i className="fas fa-microphone"></i>
               </button>
               <button 
                 onClick={stopRecording} 
                 disabled={!isRecording} 
                 className="stop-button"
               >
-                <i className="fas fa-square"></i> {/* Ícone de Quadrado */}
+                <i className="fas fa-square"></i>
               </button>
             </div>
             <button 
               onClick={handleSendMessage} 
               className="send-button"
             >
-              <i className="fas fa-arrow-up"></i> {/* Ícone de Setinha para cima */}
+              <i className="fas fa-arrow-up"></i>
             </button>
           </div>
         </div>

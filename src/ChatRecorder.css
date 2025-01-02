@@ -19,7 +19,7 @@
     overflow-y: auto;
     background-color: white;
     margin-bottom: 10px;
-    max-height: calc(100vh - 200px); /* Ajuste para garantir que o chat ocupe o restante da tela */
+    max-height: calc(100vh - 220px); /* Ajuste para garantir que o chat ocupe o restante da tela (considerando 220px para os controles) */
   }
   
   .chat-message {
