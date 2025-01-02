@@ -70,12 +70,14 @@ const ChatRecorder = () => {
       <div className="chat-window" ref={chatWindowRef}>
         {messages.map((msg, index) => (
           <div key={index} className={`chat-message-wrapper ${msg.sender === 'user' ? 'user-message' : 'bot-message'}`}>
+            <div className="chat-message">
+              {msg.text}
+            </div>
             <img 
-              className={`user-icon`} 
+              className={msg.sender === 'user' ? 'user-icon' : 'bot-icon'} 
               src={msg.sender === 'user' ? '/path-to-user-icon.jpg' : '/path-to-bot-icon.jpg'} 
-              alt="user icon" 
+              alt={msg.sender === 'user' ? 'User icon' : 'Bot icon'} 
             />
-            <div className="chat-message">{msg.text}</div>
           </div>
         ))}
       </div>

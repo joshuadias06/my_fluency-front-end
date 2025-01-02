@@ -22,12 +22,50 @@
     max-height: calc(100vh - 220px); /* Ajuste para garantir que o chat ocupe o restante da tela (considerando 220px para os controles) */
   }
   
-  .chat-message {
+  .chat-message-wrapper {
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
+    justify-content: flex-start; /* Default para o bot */
+  }
+  
+  .chat-message-wrapper.user-message {
+    justify-content: flex-end; /* Para mensagens do usuário */
+  }
+  
+  .chat-message {
     padding: 10px;
     border-radius: 8px;
     background-color: #e8f0fe;
     color: #333;
+    max-width: 80%;
+    word-wrap: break-word;
+  }
+  
+  .user-message .chat-message {
+    background-color: #e8f0fe; /* Cor da mensagem do usuário */
+  }
+  
+  .bot-message .chat-message {
+    background-color: #d1e7fd; /* Cor da mensagem do bot */
+  }
+  
+  .user-icon, .bot-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 10px; /* Espaço entre ícone e mensagem */
+  }
+  
+  .user-message .user-icon {
+    margin-left: 0;
+    margin-right: 10px; /* Espaço entre ícone e mensagem */
+  }
+  
+  .bot-message .bot-icon {
+    margin-right: 0;
+    margin-left: 10px; /* Espaço entre ícone e mensagem */
   }
   
   .chat-input-wrapper {
