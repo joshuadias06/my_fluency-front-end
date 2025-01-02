@@ -1,16 +1,35 @@
-.chat-recorder {
+/* Estilo do ícone de usuário */
+.user-icon {
+    width: 40px; /* Tamanho do ícone igual ao dos botões */
+    height: 40px;
+    border-radius: 50%; /* Torna o ícone circular */
+    object-fit: cover;
+    margin-left: 10px; /* Espaço entre ícone e mensagem */
+    background-color: #ddd; /* Cor de fundo para o ícone (ajuste conforme necessário) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .user-icon i {
+    font-size: 20px; /* Tamanho do ícone dentro do círculo */
+    color: white; /* Cor do ícone */
+  }
+  
+  /* Restante do código */
+  .chat-recorder {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* Ajusta para que os itens fiquem no topo */
+    justify-content: flex-start;
     align-items: center;
-    height: 100vh; /* Garante que ocupe toda a altura da tela */
-    padding: 0; /* Remove qualquer padding extra */
+    height: 100vh;
+    padding: 0;
     background-color: #f5f5f5;
     font-family: Arial, sans-serif;
   }
   
   .chat-window {
-    flex-grow: 1; /* Ocupa o restante do espaço disponível */
+    flex-grow: 1;
     width: 100%;
     max-width: 600px;
     border: 1px solid #ddd;
@@ -19,18 +38,18 @@
     overflow-y: auto;
     background-color: white;
     margin-bottom: 10px;
-    max-height: calc(100vh - 220px); /* Ajuste para garantir que o chat ocupe o restante da tela (considerando 220px para os controles) */
+    max-height: calc(100vh - 220px);
   }
   
   .chat-message-wrapper {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    justify-content: flex-start; /* Default para o bot */
+    justify-content: flex-start;
   }
   
   .chat-message-wrapper.user-message {
-    justify-content: flex-end; /* Para mensagens do usuário */
+    justify-content: flex-end;
   }
   
   .chat-message {
@@ -43,29 +62,21 @@
   }
   
   .user-message .chat-message {
-    background-color: #e8f0fe; /* Cor da mensagem do usuário */
+    background-color: #e8f0fe;
   }
   
   .bot-message .chat-message {
-    background-color: #d1e7fd; /* Cor da mensagem do bot */
-  }
-  
-  .user-icon, .bot-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin-left: 10px; /* Espaço entre ícone e mensagem */
+    background-color: #d1e7fd;
   }
   
   .user-message .user-icon {
     margin-left: 0;
-    margin-right: 10px; /* Espaço entre ícone e mensagem */
+    margin-right: 10px;
   }
   
   .bot-message .bot-icon {
     margin-right: 0;
-    margin-left: 10px; /* Espaço entre ícone e mensagem */
+    margin-left: 10px;
   }
   
   .chat-input-wrapper {
