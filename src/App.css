@@ -1,3 +1,46 @@
+/* Tema Claro */
+body.light-theme {
+  background-color: #f5f5f5; /* Cor de fundo clara */
+  color: #333; /* Cor do texto clara */
+}
+
+body.light-theme .chat-window {
+  background-color: #fff; /* Cor de fundo do chat */
+  border: 1px solid #ddd; /* Borda clara */
+}
+
+body.light-theme .chat-input-wrapper {
+  background-color: #fff; /* Cor de fundo do input */
+  border: 1px solid #ddd; /* Borda clara */
+}
+
+body.light-theme .chat-input {
+  background-color: #fff; /* Cor do campo de input */
+  color: #333; /* Cor do texto no input */
+}
+
+/* Tema Escuro */
+body.dark-theme {
+  background-color: #333; /* Cor de fundo escura */
+  color: #f5f5f5; /* Cor do texto escura */
+}
+
+body.dark-theme .chat-window {
+  background-color: #444; /* Cor de fundo do chat */
+  border: 1px solid #555; /* Borda escura */
+}
+
+body.dark-theme .chat-input-wrapper {
+  background-color: #444; /* Cor de fundo do input */
+  border: 1px solid #555; /* Borda escura */
+}
+
+body.dark-theme .chat-input {
+  background-color: #555; /* Cor do campo de input */
+  color: #f5f5f5; /* Cor do texto no input */
+}
+
+/* Estilo do App */
 .App {
   text-align: center;
   display: flex;
@@ -6,15 +49,16 @@
   justify-content: flex-start; /* Garante que o conteúdo no topo fique alinhado */
   height: 100vh;
   padding-top: 20px; /* Espaçamento no topo para o título */
-  background-color: #f5f5f5; /* Cor de fundo */
+  margin: 0; /* Remove margens extras */
+  overflow: hidden; /* Garante que o conteúdo não ultrapasse os limites da tela */
 }
 
+/* Estilo para o título */
 .title {
   display: flex;
   align-items: center; /* Alinha o texto e a bandeira */
   font-size: 36px;
   font-weight: bold;
-  color: #333;
   margin: 0;
 }
 
@@ -37,21 +81,19 @@
   flex: 1;
   width: 100%;
   max-width: 600px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
   padding: 10px;
   overflow-y: auto;
-  background-color: white;
-  margin-bottom: 10px;
+  margin: 0; /* Remove o espaço entre o chat e as mensagens */
   max-height: 70%;
+  border-radius: 8px;
 }
 
 .chat-input-wrapper {
   width: 100%;
   max-width: 600px;
-  background-color: #333;
   padding: 10px;
   border-radius: 8px;
+  margin-top: 10px; /* Espaçamento entre a box de mensagens e a box de input */
 }
 
 .chat-input-container {
@@ -67,8 +109,6 @@
   border: none;
   border-radius: 8px;
   font-size: 14px;
-  background-color: #333;
-  color: white;
   outline: none;
 }
 
@@ -115,6 +155,7 @@
   align-items: center;
 }
 
+/* Estilo responsivo para telas pequenas */
 @media (max-width: 600px) {
   .chat-controls {
     flex-direction: column;
