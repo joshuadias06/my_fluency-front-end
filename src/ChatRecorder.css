@@ -1,0 +1,137 @@
+.chat-recorder {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
+  }
+  
+  .chat-window {
+    flex: 1;
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    overflow-y: auto;
+    background-color: white;
+    margin-bottom: 10px;
+    max-height: 70%;
+  }
+  
+  .chat-message {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #e8f0fe;
+    color: #333;
+  }
+  
+  .chat-input-wrapper {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 8px;
+    box-sizing: border-box;
+  }
+  
+  .chat-input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  
+  .chat-input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #333;
+    color: white;
+    outline: none;
+    box-sizing: border-box;
+  }
+  
+  .chat-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .audio-controls {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .record-button,
+  .stop-button,
+  .send-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+  
+  .record-button {
+    background-color: #34a853;
+  }
+  
+  .record-button:hover {
+    background-color: #2c8c42;
+  }
+  
+  .stop-button {
+    background-color: #ea4335;
+  }
+  
+  .stop-button:hover {
+    background-color: #c1352e;
+  }
+  
+  .send-button {
+    background-color: #1a73e8;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .send-button:hover {
+    background-color: #1558b3;
+  }
+  
+  @media (max-width: 600px) {
+    .chat-controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  
+    .audio-controls {
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+  
+    .record-button,
+    .stop-button,
+    .send-button {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  }
+  
