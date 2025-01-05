@@ -5,13 +5,33 @@ const ChatRecorder = () => {
   const [messages, setMessages] = useState([]);
   const [currentMessage, setCurrentMessage] = useState('');
   const [isRecording, setIsRecording] = useState(false);
-  const [audioChunks, setAudioChunks] = useState([]);
   const [recognition, setRecognition] = useState(null);
   const chatWindowRef = useRef(null);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (currentMessage.trim()) {
+      // Adiciona a mensagem do usuário ao chat localmente
       setMessages([...messages, { text: currentMessage, sender: 'user' }]);
+      
+      try {
+        // Envia a mensagem para o backend
+        const response = await fetch('http://localhost:8080/api/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ text: currentMessage }),
+        });
+        
+        const data = await response.json();
+        
+        // Adiciona a resposta do bot ao chat
+        setMessages([...messages, { text: currentMessage, sender: 'user' }, { text: data.reply, sender: 'bot' }]);
+      } catch (error) {
+        console.error('Erro ao enviar a mensagem:', error);
+      }
+
+      // Limpa o campo de mensagem
       setCurrentMessage('');
     }
   };
@@ -22,12 +42,12 @@ const ChatRecorder = () => {
       chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
 
-    // Configura o SpeechRecognition se o navegador for compatível
+    // Configura o SpeechRecognition
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognitionInstance = new SpeechRecognition();
-      recognitionInstance.lang = 'pt-BR'; // Definindo a língua para português
-      recognitionInstance.interimResults = true; // Permite que a transcrição seja exibida enquanto o usuário fala
+      recognitionInstance.lang = 'pt-BR'; // Define a língua para português
+      recognitionInstance.interimResults = true;
 
       recognitionInstance.onresult = (event) => {
         const transcript = event.results[event.resultIndex][0].transcript;
@@ -38,7 +58,7 @@ const ChatRecorder = () => {
         console.error('Erro no reconhecimento de fala:', event.error);
       };
 
-      setRecognition(recognitionInstance); // Armazena a instância de reconhecimento de fala
+      setRecognition(recognitionInstance);
     } else {
       console.error('SpeechRecognition não é suportado no seu navegador.');
     }
